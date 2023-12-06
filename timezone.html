@@ -1,0 +1,57 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.43/moment-timezone-with-data.min.js"></script>
+</head>
+
+<body class="container">
+  <div class="vstack">
+    <h1 class="my-5">POC the timezone calculation</h1>
+
+    <div class="card my-2">
+      <h2>Browser Timezone</h2>
+      <p id="tz-name-browser"></p>
+      <p id="tz-offset-browser"></p>
+    </div>
+
+
+    <div class="card my-2">
+      <h2>Coach Timezone</h2>
+      <p id="tz-name-coach"></p>
+      <p id="tz-offset-coach"></p>
+    </div>
+
+    <div class="card my-2">
+      <h2>Result</h2>
+      <p id="result"></p>
+    </div>
+  </div>
+
+  <script>
+    // browser timezone
+    const tzNameBrowser = moment.tz.guess();
+    var tzOffsetBrowser = moment().utcOffset() / 60;
+    document.getElementById("tz-name-browser").innerHTML = `Timezone Name: ${tzNameBrowser} `;
+    document.getElementById("tz-offset-browser").innerHTML = `Timezone Offset: ${tzOffsetBrowser} `;
+
+    // property coach timezone
+    var tzNameCoach = "Australia/Melbourne";
+    var tzOffsetCoach = moment.tz(tzNameCoach).utcOffset() / 60;
+    document.getElementById("tz-name-coach").innerHTML = `Timezone Name: ${tzNameCoach} `;
+    document.getElementById("tz-offset-coach").innerHTML = `Timezone Offset: ${tzOffsetCoach} `;
+
+    // Calculate the result
+    var result = 'Morning, Lunchtime, Afternoon'
+    if (tzOffsetCoach - tzOffsetBrowser >= 3)
+      result = "Lunchtime, Afternoon";
+    else
+      result = 'Morning, Lunchtime, Afternoon'
+
+    document.getElementById("result").innerHTML = result;
+  </script>
+
+</body>
+
+</html>
